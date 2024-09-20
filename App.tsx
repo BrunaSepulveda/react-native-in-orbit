@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "./global.css";
+import { StatusBar } from "expo-status-bar";
+import { Text, View } from "react-native";
+import { Button } from "./app/ui/button";
+import { useState } from "react";
+import { Dialog } from "./app/ui/dialog";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+	const [isVisible, setIsVisible] = useState(false);
+	const onClose = () => setIsVisible(false);
+	const onOpen = () => setIsVisible(true);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	return (
+		<View className="flex-1 items-center justify-center bg-orange-700">
+			<Text>Open up App.tsx to start working on your app!</Text>
+			<Button onPress={onOpen}>Open</Button>
+			<StatusBar style="auto" />
+			<Dialog isVisible={isVisible}>
+				<Text>This is a dialog</Text>
+				<Button onPress={onClose}>Close</Button>
+			</Dialog>
+		</View>
+	);
+}
