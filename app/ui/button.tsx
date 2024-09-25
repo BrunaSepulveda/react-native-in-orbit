@@ -13,15 +13,20 @@ interface ButtonProps extends TouchableOpacityProps {
 const ButtonStyle = {
 	base: "flex items-center justify-center gap-2 rounded-lg text-sm font-medium tracking-tight outline-none ring-offset-2 ring-offset-black focus-visible:ring-2",
 	variants: {
-		primary: "bg-violet-500 text-violet-50 hover:bg-violet-600 ring-violet-500",
-		secondary: "bg-zinc-900 text-zinc-400 hover:bg-zinc-800 ring-zinc-900",
-		underline:
-			"underline underline-offset-4 text-xs text-zinc-400 bg-transparent outline-none ",
+		primary: "bg-violet-300 hover:bg-violet-600 ring-violet-500",
+		secondary: "bg-zinc-900 hover:bg-zinc-800 ring-zinc-900",
+		underline: "bg-transparent",
 	},
 	size: {
-		large: "px-4 py-2.5",
+		large: "px-6 py-2.5",
 		medium: "px-3 py-1.5",
 		small: "px-1 py-0.5",
+	},
+	variantsTextColor: {
+		primary: "text-violet-50",
+		secondary: "text-zinc-400",
+		underline:
+			"underline underline-offset-4 text-xs text-zinc-400 outline-none ",
 	},
 };
 
@@ -36,7 +41,9 @@ export const Button = ({
 			{...rest}
 			className={`${ButtonStyle.base} ${ButtonStyle.variants[variant]} ${ButtonStyle.size[size]}`}
 		>
-			<Text>{children}</Text>
+			<Text className={`${ButtonStyle.variantsTextColor[variant]}`}>
+				{children}
+			</Text>
 		</TouchableOpacity>
 	);
 };

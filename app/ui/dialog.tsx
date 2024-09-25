@@ -1,20 +1,72 @@
-import { Modal, View, Text } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Modal, View, Text, type TextProps } from "react-native";
+import { Button } from "./button";
 
-interface DialogProps {
-	children: React.ReactNode;
-	isVisible: boolean;
+interface DialogDescriptionProps extends TextProps {
+	description: string;
 }
 
-export function Dialog({ children, isVisible }: DialogProps) {
+interface DialogTitleProps extends TextProps {
+	title: string;
+}
+
+interface DialogProps extends DialogDescriptionProps, DialogTitleProps {
+	children: React.ReactNode;
+	isVisible: boolean;
+	onClose: () => void;
+}
+
+function DialogTitle({ title, ...rest }: DialogTitleProps) {
 	return (
-		<Modal className="fixed z-50 right-0 top-0 bottom-0 w-[400px] h-screen border-l border-zinc-900 bg-zinc-950 p-8" animationType="fade" visible={isVisible}>
-			<View>
-				<View>
-					<Text>Choose a sticker</Text>
-					<MaterialIcons name="close" color="#fff" size={22} />
+		<Text {...rest} className="text-lg text-zinc-400 font-semibold">
+			{title}
+		</Text>
+	);
+}
+function DialogDescription({ description, ...rest }: DialogDescriptionProps) {
+	return (
+		<Text {...rest} className="text-zinc-400 text-sm leading-relaxed">
+			{description}
+		</Text>
+	);
+}
+
+export function Dialog({
+	children,
+	isVisible,
+	title,
+	description,
+	onClose,
+}: DialogProps) {
+	return (
+		<Modal
+			presentationStyle="fullScreen"
+			animationType="fade"
+			visible={isVisible}
+		>
+			<View className="flex-col h-full w-full items-center justify-between bg-zinc-950 p-4">
+				<View className="gap-3 items-center">
+					<DialogTitle title={title} />
+					<DialogDescription description={description} />
 				</View>
 				{children}
+				<View className="flex-row w-full gap-3">
+					<Button
+						style={{ width: "50%" }}
+						onPress={onClose}
+						variant="secondary"
+						size="large"
+					>
+						Cancel
+					</Button>
+					<Button
+						className="text-violet-50"
+						style={{ width: "50%" }}
+						variant="primary"
+						size="large"
+					>
+						OK
+					</Button>
+				</View>
 			</View>
 		</Modal>
 	);
