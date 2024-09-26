@@ -16,7 +16,7 @@ const initialValues = {
 	desiredWeeklyFrequency: "",
 };
 
-export function CrateGoals({ onClose }: { onClose: () => void }) {
+export function CrateGoals() {
 	return (
 		<Formik
 			initialValues={initialValues}

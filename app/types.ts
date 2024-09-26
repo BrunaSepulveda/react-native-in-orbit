@@ -9,7 +9,6 @@ interface Summary {
 	total: number;
 	goalsPerDay: Record<string, GoalsPerDayInfo[]> | null;
 }
-[];
 
 interface SummaryResponse {
 	summary: Summary;
