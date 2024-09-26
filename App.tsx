@@ -1,7 +1,12 @@
 import "./global.css";
-import { StatusBar } from "expo-status-bar";
 import { EmptyPage } from "./app/pages/empty";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
-	return <EmptyPage />;
+	return (
+		<>
+			<StatusBar />
+			<EmptyPage />
+		</>
+	);
 }

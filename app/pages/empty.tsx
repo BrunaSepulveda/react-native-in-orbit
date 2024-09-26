@@ -1,6 +1,6 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { View, Text } from "react-native";
-import { Button } from "../ui/button";
+import { Button, ButtonCreateGoal } from "../ui/button";
 import { Dialog } from "../ui/dialog";
 import { useState } from "react";
 import { CrateGoals } from "./create-goals";
@@ -21,10 +21,7 @@ export function EmptyPage() {
 					Você ainda não cadastrou nenhuma meta, que tal cadastrar uma agora
 					mesmo?
 				</Text>
-				<Button onPress={onOpen} variant="primary" size="large">
-					<AntDesign name="plus" size={16} className="color-violet-50 pr-2" />
-					Cadastrar meta
-				</Button>
+				<ButtonCreateGoal onPress={onOpen} />
 			</View>
 			<Dialog
 				isVisible={isVisible}
@@ -33,9 +30,8 @@ export function EmptyPage() {
             fazem bem e que você quer
             continuar praticando toda
             semana."
-				onClose={onClose}
 			>
-				<CrateGoals />
+				<CrateGoals onClose={onClose} />
 			</Dialog>
 		</View>
 	);

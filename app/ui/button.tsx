@@ -1,10 +1,6 @@
-import {
-	Text,
-	TouchableOpacity,
-	type TouchableOpacityProps,
-} from "react-native";
-
-interface ButtonProps extends TouchableOpacityProps {
+import { Text, Pressable, type PressableProps } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+interface ButtonProps extends PressableProps {
 	variant?: "primary" | "secondary" | "underline";
 	size?: "small" | "medium" | "large";
 	children: React.ReactNode;
@@ -37,13 +33,33 @@ export const Button = ({
 	...rest
 }: ButtonProps) => {
 	return (
-		<TouchableOpacity
+		<Pressable
 			{...rest}
 			className={`${ButtonStyle.base} ${ButtonStyle.variants[variant]} ${ButtonStyle.size[size]}`}
 		>
 			<Text className={`${ButtonStyle.variantsTextColor[variant]}`}>
 				{children}
 			</Text>
-		</TouchableOpacity>
+		</Pressable>
 	);
 };
+
+export function ButtonCreateGoal({ ...rest }: PressableProps) {
+	return (
+		<Button {...rest} variant="primary" size="large">
+			<AntDesign name="plus" size={16} className="color-violet-50 pr-2" />
+			Cadastrar meta
+		</Button>
+	);
+}
+
+export function OutlineButton({ children, ...rest }: PressableProps) {
+	return (
+		<Pressable
+			{...rest}
+			className="flex items-center px-3 py-2 gap-2 leading-none rounded-full border border-dashed border-zinc-800 text-sm text-zinc-300 hover:border-zinc-700 disabled:opacity-50 disabled:pointer-events-none outline-none focus-visible:border-pink-500 ring-pink-500/10 focus-visible:ring-4"
+		>
+			{children}
+		</Pressable>
+	);
+}
