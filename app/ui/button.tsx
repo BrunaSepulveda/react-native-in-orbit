@@ -53,13 +53,18 @@ export function ButtonCreateGoal({ ...rest }: PressableProps) {
 	);
 }
 
-export function OutlineButton({ children, ...rest }: PressableProps) {
+interface OutlineButtonProps extends PressableProps {
+	title: string;
+}
+
+export function OutlineButton({ title, ...rest }: OutlineButtonProps) {
 	return (
 		<Pressable
 			{...rest}
-			className="flex items-center px-3 py-2 gap-2 leading-none rounded-full border border-dashed border-zinc-800 text-sm text-zinc-300 hover:border-zinc-700 disabled:opacity-50 disabled:pointer-events-none outline-none focus-visible:border-pink-500 ring-pink-500/10 focus-visible:ring-4"
+			className="flex flex-row px-3 py-2 gap-2 leading-none rounded-full border border-dashed text-sm text-zinc-300 border-zinc-800 hover:border-zinc-700 disabled:opacity-50 disabled:pointer-events-none outline-none focus-visible:border-pink-500 ring-pink-500/10 focus-visible:ring-4"
 		>
-			{children}
+			<AntDesign name="plus" size={16} className="color-zinc-600" />
+			{title}
 		</Pressable>
 	);
 }

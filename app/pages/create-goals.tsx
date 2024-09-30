@@ -3,6 +3,8 @@ import { RadioButton } from "react-native-paper";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Button } from "../ui/button";
+import { useSetAtom } from "jotai";
+import { isVisible } from "../atoms";
 
 const validationSchema = Yup.object().shape({
 	title: Yup.string().min(1).required("Expecifique o título da atividade"),
@@ -17,6 +19,8 @@ const initialValues = {
 };
 
 export function CrateGoals() {
+	const setVisible = useSetAtom(isVisible);
+
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -25,7 +29,7 @@ export function CrateGoals() {
 				console.log(values);
 			}}
 		>
-			{({ setFieldValue, values, submitForm }) => (
+			{({ setFieldValue, values, submitForm, resetForm }) => (
 				<SafeAreaView className="flex flex-1 w-full flex-col justify-between px-4 py-4 gap-4">
 					<View className="flex flex-col gap-4 w-full">
 						<Text className="text-zinc-300 text-sm font-medium leading-none">
@@ -84,8 +88,11 @@ export function CrateGoals() {
 					</RadioButton.Group>
 					<View className="flex-row w-full gap-3">
 						<Button
+							onPress={() => {
+								setVisible(false);
+								resetForm();
+							}}
 							style={{ width: "50%" }}
-							onPress={onClose}
 							variant="secondary"
 							size="large"
 						>
@@ -96,7 +103,11 @@ export function CrateGoals() {
 							style={{ width: "50%" }}
 							variant="primary"
 							size="large"
-							onPress={submitForm}
+							onPress={() => {
+								setVisible(false);
+								submitForm();
+								resetForm();
+							}}
 						>
 							OK
 						</Button>
