@@ -19,7 +19,7 @@ export function ListItemTask({
 			<AntDesign name="checkcircleo" size={16} color="#ec4899" />
 			<Text className="text-sm text-zinc-400">
 				Você completou "<Text className="text-zinc-100">{goalName}</Text>" às
-				<Text className="text-zinc-100">{timeFormatted}</Text>
+				<Text className="text-zinc-100">{` ${timeFormatted}`}</Text>
 			</Text>
 		</li>
 	);

@@ -5,6 +5,9 @@ import * as Yup from "yup";
 import { Button } from "../ui/button";
 import { useSetAtom } from "jotai";
 import { isVisible } from "../atoms";
+import { queryClient } from "App";
+import type { CreateGoalParams } from "../types";
+import { createGoal } from "../service";
 
 const validationSchema = Yup.object().shape({
 	title: Yup.string().min(1).required("Expecifique o título da atividade"),
@@ -20,16 +23,39 @@ const initialValues = {
 
 export function CrateGoals() {
 	const setVisible = useSetAtom(isVisible);
+	async function handleCreateGoal({
+		title,
+		desiredWeeklyFrequency,
+	}: CreateGoalParams) {
+		await createGoal({
+			title,
+			desiredWeeklyFrequency,
+		});
+
+		queryClient.invalidateQueries({
+			queryKey: ["getWeekPendingGoals", "summary"],
+		});
+	}
 
 	return (
 		<Formik
 			initialValues={initialValues}
 			validationSchema={validationSchema}
-			onSubmit={(values) => {
-				console.log(values);
+			onSubmit={({ desiredWeeklyFrequency, title }, { resetForm }) => {
+				try {
+					handleCreateGoal({
+						title,
+						desiredWeeklyFrequency: Number(desiredWeeklyFrequency),
+					});
+				} catch (error) {
+					console.error(error);
+				} finally {
+					setVisible(false);
+					resetForm();
+				}
 			}}
 		>
-			{({ setFieldValue, values, submitForm, resetForm }) => (
+			{({ setFieldValue, values, resetForm, handleSubmit }) => (
 				<SafeAreaView className="flex flex-1 w-full flex-col justify-between px-4 py-4 gap-4">
 					<View className="flex flex-col gap-4 w-full">
 						<Text className="text-zinc-300 text-sm font-medium leading-none">
@@ -104,9 +130,7 @@ export function CrateGoals() {
 							variant="primary"
 							size="large"
 							onPress={() => {
-								setVisible(false);
-								submitForm();
-								resetForm();
+								handleSubmit();
 							}}
 						>
 							OK
