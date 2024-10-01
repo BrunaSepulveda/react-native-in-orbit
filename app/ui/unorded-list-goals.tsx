@@ -2,6 +2,7 @@ import type { GoalsPerDayInfo } from "../types";
 import dayjs from "dayjs";
 import { ListItemTask } from "./list-item-goal";
 import { Text, View } from "react-native";
+import React from "react";
 
 interface UnorderedListParams {
 	goalsPerDay: {

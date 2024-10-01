@@ -7,6 +7,7 @@ import { Progress } from "../ui/progress";
 import { ButtonCreateGoal, OutlineButton } from "../ui/button";
 import { useSetAtom } from "jotai";
 import { isVisible } from "../atoms";
+import UnorderedList from "../ui/unorded-list-goals";
 
 type SummaryPageParams = {
 	data: Summary;
@@ -62,9 +63,11 @@ export function SummaryPage({ data, pendingGoals }: SummaryPageParams) {
 			<View className="flex flex-col text-zinc-400 gap-6">
 				<h2 className="text-xl font-medium">Sua semana</h2>
 				<Text className="">
-					{data.goalsPerDay
-						? "Precisa da listagem"
-						: "Você ainda não completou nenhuma meta essa semana."}
+					{data.goalsPerDay ? (
+						<UnorderedList goalsPerDay={data.goalsPerDay} />
+					) : (
+						"Você ainda não completou nenhuma meta essa semana."
+					)}
 				</Text>
 			</View>
 		</View>
