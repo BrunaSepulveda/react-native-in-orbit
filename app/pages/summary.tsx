@@ -8,6 +8,8 @@ import { ButtonCreateGoal, OutlineButton } from "../ui/button";
 import { useSetAtom } from "jotai";
 import { isVisible } from "../atoms";
 import UnorderedList from "../ui/unorded-list-goals";
+import { createGoalCompletion } from "../service";
+import { queryClient } from "App";
 
 type SummaryPageParams = {
 	data: Summary;
@@ -22,6 +24,16 @@ export function SummaryPage({ data, pendingGoals }: SummaryPageParams) {
 	const lastDay = dayjs().endOf("week").format("D MMMM");
 
 	const completedPercentage = Math.round((data.completed * 100) / data.total);
+
+	const completGoal = async (id: string) => {
+		await createGoalCompletion(id);
+		queryClient.invalidateQueries({
+			queryKey: ["summary"],
+		});
+		queryClient.invalidateQueries({
+			queryKey: ["getWeekPendingGoals"],
+		});
+	};
 
 	return (
 		<View className="py-10 px-5 mx-auto w-full h-full flex flex-col gap-6 bg-black">
@@ -50,14 +62,17 @@ export function SummaryPage({ data, pendingGoals }: SummaryPageParams) {
 			<View className="h-px bg-zinc-800" />
 			<View className="flex flex-row flex-wrap gap-3">
 				{pendingGoals.map(
-					({ id, title, completionCount, desiredWeeklyFrequency }) => (
-						<OutlineButton
-							disabled={completionCount >= desiredWeeklyFrequency}
-							key={id}
-							onPress={() => console.log(id)}
-							title={title}
-						/>
-					),
+					({ id, title, completionCount, desiredWeeklyFrequency }) => {
+						return (
+							!(completionCount >= desiredWeeklyFrequency) && (
+								<OutlineButton
+									key={id}
+									onPress={() => completGoal(id)}
+									title={title}
+								/>
+							)
+						);
+					},
 				)}
 			</View>
 			<View className="flex flex-col text-zinc-400 gap-6">

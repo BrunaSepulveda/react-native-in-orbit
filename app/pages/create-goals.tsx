@@ -129,6 +129,8 @@ export function CrateGoals() {
 							style={{ width: "50%" }}
 							variant="primary"
 							size="large"
+							// disabled={!values.desiredWeeklyFrequency || !values.title}
+							disabled={true}
 							onPress={() => {
 								handleSubmit();
 							}}

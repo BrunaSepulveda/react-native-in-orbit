@@ -18,10 +18,10 @@ export default function UnorderedList({ goalsPerDay }: UnorderedListParams) {
 				const formattedDate = dayjs(day).format("D[ de ]MMMM");
 
 				return (
-					<View key={day} className="flex flex-col gap-4">
-						<h3 className="font-medium">
+					<View key={day} className="flex flex-col gap-3 py-3">
+						<h3 className="font-medium text-zinc-400">
 							<Text className="capitalize">{`${weekDay} `}</Text>
-							<Text className="text-zinc-400 text-xs">({formattedDate})</Text>
+							<Text className="text-xs">({formattedDate})</Text>
 						</h3>
 						<ul className="flex flex-col gap-3">
 							{goals.map(({ id, completedAt, title }) => (

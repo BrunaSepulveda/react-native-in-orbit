@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Text } from "react-native";
+import { Button } from "./button";
+import { deleteCompletedGoals } from "../service";
+import { queryClient } from "App";
 interface ListItemTaskParams {
 	id: string;
 	goalName: string;
@@ -12,6 +15,16 @@ export function ListItemTask({
 	goalCompletedTime,
 	goalName,
 }: ListItemTaskParams) {
+	const deleteCompleted = async (id: string) => {
+		await deleteCompletedGoals(id);
+		queryClient.invalidateQueries({
+			queryKey: ["summary"],
+		});
+		queryClient.invalidateQueries({
+			queryKey: ["getWeekPendingGoals"],
+		});
+	};
+
 	const timeFormatted = `${dayjs(goalCompletedTime).format("HH:mm")}h`;
 
 	return (
@@ -21,6 +34,9 @@ export function ListItemTask({
 				Você completou "<Text className="text-zinc-100">{goalName}</Text>" às
 				<Text className="text-zinc-100">{` ${timeFormatted}`}</Text>
 			</Text>
+			<Button variant="underline" onPress={() => deleteCompleted(id)}>
+				Desfazer
+			</Button>
 		</li>
 	);
 }

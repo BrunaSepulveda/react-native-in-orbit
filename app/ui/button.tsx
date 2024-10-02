@@ -9,7 +9,7 @@ interface ButtonProps extends PressableProps {
 const ButtonStyle = {
 	base: "flex items-center justify-center gap-2 rounded-lg text-sm font-medium tracking-tight outline-none ring-offset-2 ring-offset-black focus-visible:ring-2",
 	variants: {
-		primary: "bg-violet-300 hover:bg-violet-600 ring-violet-500",
+		primary: "bg-violet-500 hover:bg-violet-600 ring-violet-500",
 		secondary: "bg-zinc-900 hover:bg-zinc-800 ring-zinc-900",
 		underline: "bg-transparent",
 	},
